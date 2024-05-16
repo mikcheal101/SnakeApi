@@ -1,0 +1,67 @@
+### SNAKE GAME
+The aim of this application is to create a web api, with the ability to play the snake game.
+
+#### Algorithm
+1. Request new game token, used for subsequent requests.
+2. Init Game, by sending the token for verification and respond with the state of the game.
+3. Move the snake(play using the snake default rules), by sending a direction with the token.
+4. If game is ended, end.
+
+#### Snake Game Default Rules:
+From Wikipedia:
+
+    Snake is a genre of action video games where the player maneuvers the end of a growing line, often themed as a snake.
+
+    The player must keep the snake from colliding with both other obstacles and itself, which gets harder as the snake lengthens. It originated in the 1976 two-player arcade video game Blockade from Gremlin Industries where the goal is to survive longer than the other player. The concept evolved into a single-player variant where a snake gets longer with each piece of food eaten—often apples or eggs. 
+
+#### Models
+
+- IDisplayable: Any entity item that can be displayed.
+    - Show()[string:json]
+- Location
+    - xPosition[int]
+    - yPosition[int]
+
+- GamePiece
+    - location[Location]
+    - canMove[boolean]
+
+- IGamePiece
+    - GetLocation()[Location]
+    - Morph()[boolean]
+
+- BodyPart: GamePiece, IGamePiece
+- Snake: IGamePiece
+    - head[BodyPart]
+    - bodyParts[BodyPart]
+
+- Fruit: GamePiece, IDisplayable, IGamePiece
+    - isRipe[boolean]
+
+- Score: IDisplayable
+    - currentScore[int]
+
+- Board
+    - length[int]
+    - width[int]
+    - gamePieces[Array<IGamePiece>]
+
+##### api response 
+
+    {
+        "state": {
+            "score": "",
+            "board": {
+                "gamePieces": [
+                    Snake: {
+                        head: {},
+                        bodyParts: []
+                    },
+                    Fruit: {
+                        isRipe: false,
+                        location: {}
+                    },
+                ]
+            },
+        }
+    }
